@@ -23,12 +23,16 @@ type RestOptions struct {
 	CasURL     *url.URL
 	ServiceURL *url.URL
 	Client     *http.Client
+	UserName   string
+	Password   string
 	URLScheme  URLScheme
 }
 
 // RestClient uses the rest protocol provided by cas
 type RestClient struct {
 	urlScheme   URLScheme
+	UserName    string
+	Password    string
 	serviceURL  *url.URL
 	client      *http.Client
 	stValidator *ServiceTicketValidator
@@ -58,6 +62,8 @@ func NewRestClient(options *RestOptions) *RestClient {
 		urlScheme:   urlScheme,
 		serviceURL:  options.ServiceURL,
 		client:      client,
+		UserName:    options.UserName,
+		Password:    options.Password,
 		stValidator: NewServiceTicketValidator(client, options.CasURL),
 	}
 }

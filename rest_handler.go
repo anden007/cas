@@ -18,18 +18,17 @@ func (ch *restClientHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if glog.V(2) {
 		glog.Infof("cas: handling %v request for %v", r.Method, r.URL)
 	}
-
-	username, password, ok := r.BasicAuth()
-	if !ok {
-		w.Header().Set("WWW-Authenticate", "Basic realm=\"CAS Protected Area\"")
-		w.WriteHeader(401)
-		return
-	}
+	// username, password, ok := r.BasicAuth()
+	// if !ok {
+	// 	w.Header().Set("WWW-Authenticate", "Basic realm=\"CAS Protected Area\"")
+	// 	w.WriteHeader(401)
+	// 	return
+	// }
 
 	// TODO we should implement a short cache to avoid hitting cas server on every request
 	// the cache could use the authorization header as key and the authenticationResponse as value
 
-	success, err := ch.authenticate(username, password)
+	success, err := ch.authenticate(ch.c.UserName, ch.c.Password)
 	if err != nil {
 		if glog.V(1) {
 			glog.Infof("cas: rest authentication failed %v", err)
