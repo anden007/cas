@@ -34,7 +34,7 @@ func (ch *restClientHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			glog.Infof("cas: rest authentication failed %v", err)
 		}
 		w.Header().Set("WWW-Authenticate", "Basic realm=\"CAS Protected Area\"")
-		w.WriteHeader(401)
+		w.WriteHeader(403)
 		return
 	}
 
